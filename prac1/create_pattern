@@ -1,0 +1,50 @@
+#!/bin/bash
+
+
+
+
+# get access the number of the parameters
+NumPara=$#
+upperJudger=false
+shiftNum=0
+# there are totally three situations
+# first:more than three parameters(illegal situation)
+if [[ $NumPara -gt 3 ]]; then
+  echo "too much parameters"
+# second:just three parameters
+elif [[ $NumPara -eq 3 ]]; then
+
+    # probably it would be like "-u -n 2" or "-n 2 -u" in other word,"-u" would appear either $1 or $3
+    if [[ $1 = "-u" ]]; then      #this is the legal position
+       upperJudger=true
+       shiftNum=$3;
+
+    elif [[ $2 = "-u" ]]; then     #this is the illegal position
+       upperJudger=false
+
+
+    elif [[ $3 = "-u" ]]; then    #this is the legal position
+        upperJudger=true
+        shiftNum=$2;
+
+    fi
+
+# third:two parameters
+elif [[ $NumPara -eq 2 ]]; then
+
+    shiftNum=$2;
+fi
+
+declare -a lowercase
+lowercase=(a b c d e f g h i j k l m n o p q r s t u v w x y z) #this is the lowercase alphabet
+uppercase=(A B C D E F G H I J K L M N O P Q R S T U V W X Y Z) #this is the uppercase alphabet
+
+
+# output the pattern according to the upperJudger and shift_Number
+if [[ $upperJudger = false ]]; then
+  # no "-u" parameter
+  echo "[${lowercase[$shiftNum]}-za-${lowercase[$shiftNum-1]}]"
+else
+  # do have "-u" parameter
+  echo "[${uppercase[$shiftNum]}-ZA-${uppercase[$shiftNum-1]}]"
+fi

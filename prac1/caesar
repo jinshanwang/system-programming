@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# first step:
+#call the function using the three parameters
+# and assign the output to variable called pattern.
+pattern=$(./create_pattern $1 $2 $3)
+
+# read the input and translate it in while loop
+while read input    # get input
+ do
+   #line by line until eof is met
+   if [[ $input = "EOF" || $input = "eof" ]];
+    then
+      # exit the program
+      break;
+   #when there is no "-u"
+   elif [[ $# -eq 2 ]]; then
+     echo $input | tr '[a-z]' $pattern
+      # next input
+     continue;
+   #when there is "-u"
+  elif [[ $# -eq 3 ]]; then
+     echo $input | tr '[A-Z]' $pattern
+      # next input
+     continue;
+   fi
+done

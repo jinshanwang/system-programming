@@ -1,0 +1,8 @@
+#!/bin/bash
+# assuming that all of the cases are uppercase
+fileName=$1
+# using a for loop to output the 25 shift 
+for (( i = 1; i < 26; i++ )); do
+  echo "Shift $i"
+  cat<$fileName | tr '[A-Z]' $(./create_pattern -u -n $i)
+done
